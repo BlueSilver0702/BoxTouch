@@ -32,6 +32,7 @@ class ViewController: UIViewController {
         self.countTxt.hidden = false
     }
 
+    /* call back func after count will be selected */
     func countDidSelected() {
         countSelected = Int(downPicker.getTextField().text!)
         if countSelected > 0 {
