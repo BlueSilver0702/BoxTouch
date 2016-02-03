@@ -19,15 +19,15 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
+        // init Count Picker
         self.downPicker = DownPicker()
         let persons: NSMutableArray = ["1", "2", "3", "4", "5"]
         self.downPicker = DownPicker(textField: self.countTxt, withData:persons as [AnyObject])
         self.downPicker.setPlaceholder("Select Box Count")
-        
         self.downPicker.addTarget(self, action: "countDidSelected", forControlEvents: UIControlEvents.ValueChanged)
         
+        // init UI state
         self.boxView.hidden = true
         self.countTxt.hidden = false
     }
@@ -39,6 +39,9 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: - Box UI Update
+    
+    /* show Boxes and hide Count Picker */
     func showBox() {
         addBox()
         UIView.transitionWithView(self.view, duration: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
@@ -49,6 +52,7 @@ class ViewController: UIViewController {
         })
     }
     
+    /* hide Boxes and show Count Picker */
     func hideBox() {
         self.countTxt.text = ""
         UIView.transitionWithView(self.view, duration: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
@@ -59,6 +63,7 @@ class ViewController: UIViewController {
         })
     }
     
+    /* add Boxes on Screen */
     func addBox() {
         self.boxView.subviews.forEach { subview in
             subview.removeFromSuperview()
@@ -80,6 +85,7 @@ class ViewController: UIViewController {
         }
     }
     
+    /* remove Boxes whenever btn clicked */
     func removeBox(sender: UIButton) {
         sender.removeFromSuperview()
         self.leaveBoxCount--
@@ -87,6 +93,7 @@ class ViewController: UIViewController {
             hideBox()
         }
         
+        // update Boxes frame once removed one Box touched
         let btnWidth: CGFloat = 320 * 0.75 / CGFloat(countSelected)
         let btnHeight: CGFloat = 54.0
         
@@ -96,7 +103,7 @@ class ViewController: UIViewController {
                 let boxBtn:UIButton = self.boxView.subviews[i] as! UIButton
                 boxBtn.frame = CGRectMake(btnWidth * CGFloat(i) + btnLeft * CGFloat(i + 1), 0, btnWidth, btnHeight)
             }
-            }, completion: { (finished: Bool) -> () in
+        }, completion: { (finished: Bool) -> () in
         })
     }
 }
