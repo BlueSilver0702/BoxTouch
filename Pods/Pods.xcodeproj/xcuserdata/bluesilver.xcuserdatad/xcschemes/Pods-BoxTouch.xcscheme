@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '0D21722BD7C53B279633ECA2'
+               BlueprintIdentifier = '86AD157972791886D57F59D4'
                BlueprintName = 'Pods-BoxTouch'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-BoxTouch.a'>

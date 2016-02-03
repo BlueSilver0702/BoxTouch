@@ -270,7 +270,7 @@
 
 -(void) setValueAtIndex:(NSInteger)index
 {
-    if (index >= 0) [self pickerView:nil didSelectRow:index inComponent:0];
+    if (index >= 0) [self pickerView:self->pickerView didSelectRow:index inComponent:0];
     else [self setText:nil];
 }
 
