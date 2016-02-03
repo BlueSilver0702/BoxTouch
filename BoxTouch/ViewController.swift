@@ -89,6 +89,8 @@ class ViewController: UIViewController {
     func removeBox(sender: UIButton) {
         sender.removeFromSuperview()
         self.leaveBoxCount--
+        
+        // show Count Picker if all Boxes removed
         if self.leaveBoxCount == 0 {
             hideBox()
         }
