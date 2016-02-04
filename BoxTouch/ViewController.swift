@@ -10,56 +10,70 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var countTxt: UITextField!
+    @IBOutlet weak var wordTxt: UITextField!
     @IBOutlet weak var boxView: UIView!
     
-    var downPicker: DownPicker!
-    var countSelected: Int!
+    var wordPicker: DownPicker!
+    var wordSelected: Int!
     var leaveBoxCount: Int = 0
+    var countSelected: Int = 0
+    var wordList: NSArray! = ["big", "at", "for", "like", "look", "see", "where", "you"]
+    var randomNumArray: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // init Count Picker
-        self.downPicker = DownPicker()
-        let persons: NSMutableArray = ["1", "2", "3", "4", "5"]
-        self.downPicker = DownPicker(textField: self.countTxt, withData:persons as [AnyObject])
-        self.downPicker.setPlaceholder("Select Box Count")
-        self.downPicker.addTarget(self, action: "countDidSelected", forControlEvents: UIControlEvents.ValueChanged)
+        // init Word Picker
+        self.wordPicker = DownPicker()
+        self.wordPicker = DownPicker(textField: self.wordTxt, withData:wordList as [AnyObject])
+        self.wordPicker.setPlaceholder("Select word to find")
+        self.wordPicker.addTarget(self, action: "wordDidSelected", forControlEvents: UIControlEvents.ValueChanged)
         
         // init UI state
-        self.boxView.hidden = true
-        self.countTxt.hidden = false
+        boxView.hidden = true
+        wordTxt.hidden = false
     }
+    
+    /* call back func after word will be selected */
+    func wordDidSelected() {
+        if wordPicker.selectedIndex >= 0 {
+            wordSelected = wordPicker.selectedIndex
+            
+            countSelected = Int(arc4random_uniform(UInt32(4)) + 1)
+            while randomNumArray.count < countSelected {
+                let rand = Int(arc4random_uniform(UInt32(8)))
+                for(var ii = 0; ii < countSelected; ii++){
+                    if randomNumArray.contains(rand){
 
-    /* call back func after count will be selected */
-    func countDidSelected() {
-        countSelected = Int(downPicker.getTextField().text!)
-        if countSelected > 0 {
-            self.showBox()
+                    } else {
+                        randomNumArray.append(rand)
+                    }
+                }
+            }
+            
+            showBox()
         }
     }
     
     // MARK: - Box UI Update
-    
+
     /* show Boxes and hide Count Picker */
     func showBox() {
         addBox()
         UIView.transitionWithView(self.view, duration: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.boxView.hidden = false
-            self.countTxt.hidden = true
-            self.downPicker.hidden = true
+            self.wordTxt.hidden = true
         }, completion: { (finished: Bool) -> () in
         })
     }
     
     /* hide Boxes and show Count Picker */
     func hideBox() {
-        self.countTxt.text = ""
+        wordTxt.text = ""
+        randomNumArray = []
         UIView.transitionWithView(self.view, duration: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.boxView.hidden = true
-            self.countTxt.hidden = false
-            self.downPicker.hidden = false
+            self.wordTxt.hidden = false
         }, completion: { (finished: Bool) -> () in
         })
     }
@@ -79,35 +93,40 @@ class ViewController: UIViewController {
         for var i: Int = 0; i < countSelected; i++ {
             let boxBtn:UIButton = UIButton(frame: CGRectMake(btnWidth * CGFloat(i) + btnLeft * CGFloat(i + 1), 0, btnWidth, btnHeight))
             boxBtn.setBackgroundImage(UIImage(named: "Image") as UIImage?, forState: UIControlState.Normal)
-            boxBtn.setTitle(String(format: "Box%d", i), forState: UIControlState.Normal)
+            let wordIndex:Int = randomNumArray[i]
+            boxBtn.setTitle(wordList[wordIndex] as? String, forState: UIControlState.Normal)
             boxBtn.addTarget(self, action: "removeBox:", forControlEvents: UIControlEvents.TouchUpInside)
-            boxBtn.tag = i;
+            boxBtn.tag = wordIndex;
             self.boxView.addSubview(boxBtn)
         }
     }
     
     /* remove Boxes whenever btn clicked */
     func removeBox(sender: UIButton) {
-        sender.removeFromSuperview()
-        self.leaveBoxCount--
-        
-        // show Count Picker if all Boxes removed
-        if self.leaveBoxCount == 0 {
+        if sender.tag == wordSelected {
             hideBox()
-        }
-        
-        // update Boxes frame once removed one Box touched
-        let btnWidth: CGFloat = 320 * 0.75 / CGFloat(countSelected)
-        let btnHeight: CGFloat = 54.0
-        
-        UIView.transitionWithView(self.view, duration: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            for var i: Int = 0; i < self.leaveBoxCount; i++ {
-                let btnLeft: CGFloat = (320 - btnWidth * CGFloat(self.leaveBoxCount)) / CGFloat(self.leaveBoxCount + 1)
-                let boxBtn:UIButton = self.boxView.subviews[i] as! UIButton
-                boxBtn.frame = CGRectMake(btnWidth * CGFloat(i) + btnLeft * CGFloat(i + 1), 0, btnWidth, btnHeight)
+        } else {
+            sender.removeFromSuperview()
+            self.leaveBoxCount--
+            
+            // show Count Picker if all Boxes removed
+            if self.leaveBoxCount == 0 {
+                hideBox()
             }
-        }, completion: { (finished: Bool) -> () in
-        })
+            
+            // update Boxes frame once removed one Box touched
+            let btnWidth: CGFloat = 320 * 0.75 / CGFloat(countSelected)
+            let btnHeight: CGFloat = 54.0
+            
+            UIView.transitionWithView(self.view, duration: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                for var i: Int = 0; i < self.leaveBoxCount; i++ {
+                    let btnLeft: CGFloat = (320 - btnWidth * CGFloat(self.leaveBoxCount)) / CGFloat(self.leaveBoxCount + 1)
+                    let boxBtn:UIButton = self.boxView.subviews[i] as! UIButton
+                    boxBtn.frame = CGRectMake(btnWidth * CGFloat(i) + btnLeft * CGFloat(i + 1), 0, btnWidth, btnHeight)
+                }
+                }, completion: { (finished: Bool) -> () in
+            })
+        }
     }
 }
 
