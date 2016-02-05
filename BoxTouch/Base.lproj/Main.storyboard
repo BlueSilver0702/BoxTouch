@@ -25,30 +25,30 @@
                                     <constraint firstAttribute="width" constant="320" id="rmI-QA-ebo"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FpG-fw-jtP">
-                                <rect key="frame" x="29" y="269" width="262" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Gc-iD-STd">
+                                <rect key="frame" x="64" y="35" width="192" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="rtz-V1-0fv"/>
+                                    <constraint firstAttribute="width" constant="192" id="PhZ-vI-Tgv"/>
+                                    <constraint firstAttribute="height" constant="21" id="efm-V6-f63"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eKx-aN-U8z" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5El-Ht-o3L"/>
-                            <constraint firstItem="FpG-fw-jtP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="29" id="Dct-xh-Lkq"/>
-                            <constraint firstItem="FpG-fw-jtP" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="GlS-4e-98Z"/>
                             <constraint firstItem="eKx-aN-U8z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="H6M-st-N8A"/>
-                            <constraint firstItem="FpG-fw-jtP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xqr-S9-Xy1"/>
-                            <constraint firstAttribute="trailing" secondItem="FpG-fw-jtP" secondAttribute="trailing" constant="29" id="zgn-3w-bcz"/>
+                            <constraint firstItem="7Gc-iD-STd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LxG-Jb-OML"/>
+                            <constraint firstItem="7Gc-iD-STd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="15" id="w12-s7-Mpa"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="boxView" destination="eKx-aN-U8z" id="vI4-1R-U0F"/>
-                        <outlet property="wordTxt" destination="FpG-fw-jtP" id="6ST-qv-0Zd"/>
+                        <outlet property="currentLab" destination="7Gc-iD-STd" id="zYt-nb-DPS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
